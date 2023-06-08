@@ -12,11 +12,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
@@ -61,15 +64,24 @@ fun PhotoGalleryApp(modifier: Modifier = Modifier) {
     // Main content
     Column(
         modifier = modifier
+            .verticalScroll(rememberScrollState())
             .fillMaxSize()
             .padding(4.dp)
             .border(1.dp, Color.Red),
-        horizontalAlignment = Alignment.CenterHorizontally,
+        horizontalAlignment = CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Image(
             painter = painterResource(id = R.drawable.img_android_plug),
             contentDescription = null,
+            modifier = modifier
+                .size(width = 200.dp, height = 400.dp)
+                .align(CenterHorizontally)
+                .border(1.dp, Color.Gray),
+        )
+        Image(
+            painter = painterResource(id = R.drawable.damiano_baschiera),
+            contentDescription = "damiano baschiera bridge",
             modifier = modifier
                 .size(width = 200.dp, height = 400.dp)
                 .align(CenterHorizontally)
