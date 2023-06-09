@@ -3,12 +3,14 @@ package com.example.photogallery
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -16,11 +18,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.photogallery.ui.theme.PhotoGalleryTheme
@@ -42,44 +48,78 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PhotoGalleryApp(modifier: Modifier = Modifier) {
+fun PhotoGalleryContent(
+    imageBridge: Int,
+    @StringRes textBridge: Int,
+    modifier: Modifier = Modifier
+) {
+    // joke
     Column {
         Text(text = "It's Photo Gallery APP", modifier = modifier.padding(16.dp))
         Text(text = "don't you believe me?", modifier = modifier.padding(16.dp))
-
     }
-
+    // Main Content
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.davide_ragusa),
+            painter = painterResource(id = imageBridge),
             contentDescription = "Davide Ragusa",
             modifier
                 .size(width = 300.dp, height = 150.dp)
                 .border(1.dp, Color.Gray)
         )
-        Text(text = "Davide Ragusa bridge",
+        Text(
+            text = stringResource(id = textBridge),
             modifier
                 .padding(top = 24.dp)
-                .border(1.dp, Color.Black))
+                .border(1.dp, Color.Black)
+        )
     }
-
-    Row (modifier = modifier) {
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "Next")
-        }
-        Button(onClick = { /*TODO*/ }) {
-            Text(text = "Previous")
-        }
-    }
-
 
 }
 
-// TODO: /* fun PhotoGalleryViewer */
+@Composable
+fun PhotoGalleryApp(modifier: Modifier = Modifier) {
+
+    var bridgeHolder by remember { mutableStateOf(0) }
+
+    when (bridgeHolder) {
+        0 -> PhotoGalleryContent(
+                imageBridge = R.drawable.davide_ragusa, textBridge = R.string.davide_ragusa
+            )
+
+        1 -> PhotoGalleryContent(
+                imageBridge = R.drawable.damiano_baschiera, textBridge = R.string.damiano_baschiera
+            )
+
+        2 -> PhotoGalleryContent(
+                imageBridge = R.drawable.evren_aydin, textBridge = R.string.evren_aydin
+            )
+
+        3 -> PhotoGalleryContent(
+                imageBridge = R.drawable.simon_stratford, textBridge = R.string.simon_stratford
+            )
+
+        else -> bridgeHolder = 0
+    }
+
+    Row(
+        modifier = modifier
+            .border(1.dp, Color.Red),
+        horizontalArrangement = Arrangement.SpaceAround,
+        verticalAlignment = Alignment.Bottom
+    ) {
+        Button(onClick = { bridgeHolder-- }) {
+            Text(text = "Previous")
+        }
+        Button(onClick = { bridgeHolder++ }) {
+            Text(text = "Next")
+        }
+    }
+}
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
