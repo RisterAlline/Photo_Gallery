@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
@@ -40,7 +39,11 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
-                    PhotoGalleryApp()
+                    PhotoGalleryApp(
+                        imageBridge = stringResource(id = R.string.img_android_plug).toInt(),
+                        textBridge = stringResource(id = R.string.img_android_plug).toInt(),
+                        modifier = Modifier
+                    )
                 }
             }
         }
@@ -48,28 +51,43 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun PhotoGalleryContent(
-    imageBridge: Int,
-    @StringRes textBridge: Int,
-    modifier: Modifier = Modifier
+fun PhotoGalleryApp(
+    imageBridge: Int, @StringRes textBridge: Int, modifier: Modifier = Modifier
 ) {
-    // joke
-    Column {
-        Text(text = "It's Photo Gallery APP", modifier = modifier.padding(16.dp))
-        Text(text = "don't you believe me?", modifier = modifier.padding(16.dp))
+    var bridgeHolder by remember { mutableStateOf(0) }
+
+    when (bridgeHolder) {
+        0 -> PhotoGalleryApp(
+            imageBridge = R.drawable.davide_ragusa, textBridge = R.string.davide_ragusa
+        )
+
+        1 -> PhotoGalleryApp(
+            imageBridge = R.drawable.damiano_baschiera, textBridge = R.string.damiano_baschiera
+        )
+
+        2 -> PhotoGalleryApp(
+            imageBridge = R.drawable.evren_aydin, textBridge = R.string.evren_aydin
+        )
+
+        3 -> PhotoGalleryApp(
+            imageBridge = R.drawable.simon_stratford, textBridge = R.string.simon_stratford
+        )
+
+        else -> bridgeHolder = 0
     }
     // Main Content
     Column(
-        modifier = modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        modifier = modifier.fillMaxSize()
     ) {
+        Text(text = "It's Photo Gallery APP", modifier = modifier.padding(16.dp))
+        Text(text = "don't you believe me?", modifier = modifier.padding(16.dp))
         Image(
             painter = painterResource(id = imageBridge),
             contentDescription = "Davide Ragusa",
             modifier
                 .size(width = 300.dp, height = 150.dp)
-                .border(1.dp, Color.Gray)
+                .border(1.dp, Color.Gray),
+            alignment = Alignment.CenterStart
         )
         Text(
             text = stringResource(id = textBridge),
@@ -77,54 +95,30 @@ fun PhotoGalleryContent(
                 .padding(top = 24.dp)
                 .border(1.dp, Color.Black)
         )
-    }
-
-}
-
-@Composable
-fun PhotoGalleryApp(modifier: Modifier = Modifier) {
-
-    var bridgeHolder by remember { mutableStateOf(0) }
-
-    when (bridgeHolder) {
-        0 -> PhotoGalleryContent(
-                imageBridge = R.drawable.davide_ragusa, textBridge = R.string.davide_ragusa
-            )
-
-        1 -> PhotoGalleryContent(
-                imageBridge = R.drawable.damiano_baschiera, textBridge = R.string.damiano_baschiera
-            )
-
-        2 -> PhotoGalleryContent(
-                imageBridge = R.drawable.evren_aydin, textBridge = R.string.evren_aydin
-            )
-
-        3 -> PhotoGalleryContent(
-                imageBridge = R.drawable.simon_stratford, textBridge = R.string.simon_stratford
-            )
-
-        else -> bridgeHolder = 0
-    }
-
-    Row(
-        modifier = modifier
-            .border(1.dp, Color.Red),
-        horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.Bottom
-    ) {
-        Button(onClick = { bridgeHolder-- }) {
-            Text(text = "Previous")
-        }
-        Button(onClick = { bridgeHolder++ }) {
-            Text(text = "Next")
+        // Buttons
+        Row(
+            modifier = modifier.border(1.dp, Color.Red),
+            horizontalArrangement = Arrangement.SpaceAround
+        ) {
+            Button(onClick = { bridgeHolder-- }) {
+                Text(text = "Previous")
+            }
+            Button(onClick = { bridgeHolder++ }) {
+                Text(text = "Next")
+            }
         }
     }
+
 }
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun GreetingPreview() {
+fun PhotoGalleryAppPreview() {
     PhotoGalleryTheme {
-        PhotoGalleryApp()
+        PhotoGalleryApp(
+            imageBridge = stringResource(id = R.string.img_android_plug).toInt(),
+            textBridge = stringResource(id = R.string.img_android_plug).toInt(),
+            modifier = Modifier
+        )
     }
 }
