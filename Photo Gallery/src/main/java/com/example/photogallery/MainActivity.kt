@@ -40,8 +40,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
                 ) {
                     PhotoGalleryApp(
-                        imageBridge = stringResource(id = R.string.img_android_plug).toInt(),
-                        textBridge = stringResource(id = R.string.img_android_plug).toInt(),
+                        imageBridge = R.drawable.img_android_plug,
+                        textBridge = R.string.img_android_plug,
                         modifier = Modifier
                     )
                 }
@@ -100,10 +100,10 @@ fun PhotoGalleryApp(
             modifier = modifier.border(1.dp, Color.Red),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Button(onClick = { bridgeHolder-- }) {
+            Button(onClick = {  } ) {
                 Text(text = "Previous")
             }
-            Button(onClick = { bridgeHolder++ }) {
+            Button(onClick = {  } ) {
                 Text(text = "Next")
             }
         }
@@ -116,8 +116,8 @@ fun PhotoGalleryApp(
 fun PhotoGalleryAppPreview() {
     PhotoGalleryTheme {
         PhotoGalleryApp(
-            imageBridge = stringResource(id = R.string.img_android_plug).toInt(),
-            textBridge = stringResource(id = R.string.img_android_plug).toInt(),
+            imageBridge = R.drawable.img_android_plug,
+            textBridge = R.string.img_android_plug,
             modifier = Modifier
         )
     }
