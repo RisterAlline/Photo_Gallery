@@ -4,7 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,9 +17,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -45,42 +47,79 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun PhotoGalleryApp(modifier: Modifier = Modifier) {
+
+    var currentBridge = painterResource(id = R.drawable.img_android_plug)
+    var currentTextBridge = stringResource(id = R.string.img_android_plug)
+
+    var counter by remember { mutableStateOf(0) }
+    when (counter) {
+        0 -> {
+            currentBridge = painterResource(id = R.drawable.bridge_3024773)
+            currentTextBridge = stringResource(id = R.string.bridge_3024773)
+        }
+
+        1 -> {
+            currentBridge = painterResource(id = R.drawable.damiano_baschiera)
+            currentTextBridge = stringResource(id = R.string.damiano_baschiera)
+        }
+
+        2 -> {
+            currentBridge = painterResource(id = R.drawable.davide_ragusa)
+            currentTextBridge = stringResource(id = R.string.davide_ragusa)
+        }
+
+        3 -> {
+            currentBridge = painterResource(id = R.drawable.simon_stratford)
+            currentTextBridge = stringResource(id = R.string.simon_stratford)
+        }
+
+        4 -> {
+            currentBridge = painterResource(id = R.drawable.evren_aydin)
+            currentTextBridge = stringResource(id = R.string.evren_aydin)
+        }
+
+        else -> {
+            counter = 0
+        }
+    }
     // Main Content
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(top = 32.dp),
         horizontalAlignment = CenterHorizontally
-    ) {
-        Text(text = "It's Photo Gallery APP", modifier = modifier.padding(4.dp))
-        Text(text = "don't you believe me?", modifier = modifier.padding(16.dp))
+    ) {// Header joke
+        Text(
+            text = "It's Photo Gallery APP",
+        )
+        Text(
+            text = "don't you believe me?",
+        )
+        // Bridge Image
         Image(
-            painter = painterResource(id = R.drawable.img_android_plug),
-            contentDescription = "Davide Ragusa",
+            painter = currentBridge,
+            contentDescription = null,
             modifier
                 .wrapContentSize()
                 .align(CenterHorizontally)
-                .size(width = 300.dp, height = 150.dp)
-                .border(1.dp, Color.Gray),
-        )
-        Text(
-            text = stringResource(id = R.string.img_android_plug),
-            modifier
                 .padding(top = 24.dp)
-                .border(1.dp, Color.Black)
+                .size(width = 300.dp, height = 150.dp),
+        )
+        // Bridge Text description
+        Text(
+            text = currentTextBridge, modifier.padding(top = 24.dp)
         )
         // Buttons Row
         Row(
             modifier = modifier
                 .fillMaxWidth()
-                .padding(top = 24.dp)
-                .border(1.dp, Color.Red),
+                .padding(top = 24.dp),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
-            Button(onClick = { }) {
+            Button(onClick = { counter-- }) {
                 Text(text = "Previous")
             }
-            Button(onClick = { }) {
+            Button(onClick = { counter++ }) {
                 Text(text = "Next")
             }
         }
